@@ -1,0 +1,33 @@
+<div class="p-8">
+  <form [formGroup]="carForm" (ngSubmit)="saveCar()">
+    <div>
+      <label>ID</label>
+      <input pInputText formControlName="id" />
+    </div>
+    <div>
+      <label>SPZ</label>
+      <input pInputText formControlName="licencePlate" />
+    </div>
+    <div>
+      <label>Znacka</label>
+      <p-dropdown
+        [options]="carBrands"
+        formControlName="brand"
+        [placeholder]="'Vyberte znacku'"
+      >
+      </p-dropdown>
+    </div>
+    <div>
+      <label>Cena</label>
+      <input pInputNumber formControlName="price" />
+    </div>
+    <div>
+      <label>Datum vydani</label>
+      <p-calendar formControlName="createdDate" [showIcon]="true"></p-calendar>
+    </div>
+    <div>
+      <button type="submit" pButton label="Ulozit"></button>
+      <button type="button" pButton label="Zavrit" (click)="close()"></button>
+    </div>
+  </form>
+</div>
