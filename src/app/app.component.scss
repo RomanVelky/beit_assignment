@@ -1,0 +1,11 @@
+@media (min-width: 400px) and (max-width: 500px) {
+  .custom-max-w-sm {
+    max-width: 24rem; /* equivalent to max-w-sm */
+  }
+}
+
+@media (min-width: 500px) and (max-width: 640px) {
+  .custom-max-w-md {
+    max-width: 28rem; /* equivalent to max-w-md */
+  }
+}
