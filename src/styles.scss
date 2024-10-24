@@ -8,3 +8,23 @@
   @tailwind components;
   @tailwind utilities;
 }
+
+// GLOBALLY SET UP CUSTOM STYLE FOR P-DROPDOWN COMPONENT
+.p-dropdown {
+  border-radius: 3rem;
+  min-width: 12rem;
+  border: 1px solid rgb(234, 234, 234);
+}
+
+.p-dropdown-item {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: unset;
+  color: unset;
+}
+
+.p-dropdown-check-icon {
+  color: rgb(74, 80, 235);
+}
