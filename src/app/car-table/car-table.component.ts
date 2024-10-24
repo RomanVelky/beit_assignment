@@ -30,21 +30,21 @@ type Column = {
 })
 export class CarTableComponent {
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
-  cols!: Column[];
+
+  cols: Column[] = [
+    { field: 'id', header: 'ID' },
+    { field: 'licencePlate', header: 'SPZ' },
+    { field: 'brand', header: 'Znacka' },
+    { field: 'price', header: 'Cena' },
+    { field: 'createdDate', header: 'Datum' },
+    { field: 'action', header: 'Akce' },
+  ];
   cars: Car[] = [];
   displaySidebar: boolean = false;
   selectedCar: Car | null = null;
 
   constructor(private carService: CarService) {
     this.cars = this.carService.getCars();
-    this.cols = [
-      { field: 'id', header: 'ID' },
-      { field: 'licencePlate', header: 'SPZ' },
-      { field: 'brand', header: 'Znacka' },
-      { field: 'price', header: 'Cena' },
-      { field: 'createdDate', header: 'Datum' },
-      { field: 'action', header: 'Akce' },
-    ];
   }
 
   showCarDetail(car: Car) {

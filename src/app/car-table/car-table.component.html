@@ -32,14 +32,11 @@
   #sidebarRef
 >
   <ng-template pTemplate="headless">
-    <p-button
-      type="button"
-      (onClick)="closeCallback($event)"
-      icon="pi pi-times"
-      rounded="true"
-      outlined="true"
-      styleClass="h-2rem w-2rem"
-    ></p-button>
-    <app-car-detail [car]="selectedCar"></app-car-detail>
+    <ng-container *ngIf="selectedCar">
+      <app-car-detail
+        [car]="selectedCar"
+        (closeEmitter)="closeCallback($event)"
+      ></app-car-detail>
+    </ng-container>
   </ng-template>
 </p-sidebar>
