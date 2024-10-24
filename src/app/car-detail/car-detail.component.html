@@ -14,6 +14,7 @@
         [options]="carBrands"
         formControlName="brand"
         [placeholder]="'Vyberte znacku'"
+        [checkmark]="true"
       >
       </p-dropdown>
     </div>
@@ -30,8 +31,8 @@
         locale="cs-CZ"
       ></p-inputNumber>
     </div>
-    <div class="flex justify-center gap-2 py-2">
-      <label>Datum vydani</label>
+    <div class="flex justify-between gap-2 py-2">
+      <label class="content-center">Datum vydani</label>
 
       <p-calendar
         formControlName="createdDate"

@@ -44,7 +44,14 @@ export class CarTableComponent {
   selectedCar: Car | null = null;
 
   constructor(private carService: CarService) {
-    this.cars = this.carService.getCars();
+    this.carService.getCars().subscribe({
+      next: (cars) => {
+        this.cars = cars;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
   showCarDetail(car: Car) {
@@ -72,6 +79,18 @@ export class CarTableComponent {
         return `${day}.${month}.${year}`; // Format as desired (9.5.2019 is desired value for me, not 09. 05. 2019 like the toLocaleDateString does it)
       default:
         return value; // For other fields, return value as is
+    }
+  }
+
+  handleCarUpdated(updatedCar: Car) {
+    // alternative would be to call getCars from carService.ts
+    // In larger scale project I would consider using e.g. Tanstack Query or other state management library
+    // Find the index of the car that was updated
+    const index = this.cars.findIndex((car) => car.id === updatedCar.id);
+    if (index !== -1) {
+      // Update the car in the array
+      this.cars[index] = updatedCar;
+      this.cars = [...this.cars]; // Trigger change detection
     }
   }
 }

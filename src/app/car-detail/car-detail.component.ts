@@ -31,8 +31,27 @@ import { CarService } from '../services/car.service';
   styleUrls: ['./car-detail.component.scss'],
 })
 export class CarDetailComponent implements OnInit {
-  @Input() car!: Car;
   @Output() closeEmitter = new EventEmitter<Event>();
+  @Output() carUpdated = new EventEmitter<Car>();
+
+  @Input() // I decided for setter approach instead of using OnChanges. If the project would be larger scale I would think about using BehaviorSubject
+  set car(value: Car) {
+    this._car = value;
+    if (this._car) {
+      // Convert createdDate to Date object before patching
+      this.carForm.patchValue({
+        ...this._car,
+        createdDate: this._car.createdDate
+          ? new Date(this._car.createdDate)
+          : null,
+      });
+    }
+  }
+  private _car!: Car;
+
+  get car(): Car {
+    return this._car;
+  }
 
   carForm: FormGroup;
 
@@ -50,15 +69,6 @@ export class CarDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carService.getCarss().subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (error) => {
-        console.error('Error fetching cars', error);
-      },
-    });
-
     const carBrands = ['AUDI', 'BMW', 'MERCEDES', 'SKODA'] as const;
 
     this.carFormSchema = z.object({
@@ -70,14 +80,25 @@ export class CarDetailComponent implements OnInit {
   }
 
   saveCar() {
-    const result = this.carFormSchema.safeParse(this.carForm.value);
+    const result = this.carFormSchema.safeParse(this.carForm.getRawValue());
 
     if (result.success) {
-      // Save the car details logic
-      console.log('Car details are valid:', result.data);
+      const updatedCar: Car = {
+        ...this.car, // Start with the existing car details
+        ...result.data, // Overwrite with the validated form data
+      };
+      const carId = this.car.id;
+
+      this.carService.updateCar(carId, updatedCar).subscribe({
+        next: (updatedCar) => {
+          this.carUpdated.emit(updatedCar); // Emit the updated car
+        },
+        error: (error) => {
+          console.error('Error updating the car:', error);
+        },
+      });
     } else {
-      // Handle validation errors
-      console.log('Validation errors:', result.error.format());
+      console.error('Validation errors:', result.error.format());
     }
   }
 

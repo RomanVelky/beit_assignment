@@ -1,4 +1,4 @@
-<div class="rounded-xl p-8">
+<div class="p-2 sm:p-8">
   <p-table [columns]="cols" [value]="cars" [rows]="4" [paginator]="true">
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -36,6 +36,7 @@
       <app-car-detail
         [car]="selectedCar"
         (closeEmitter)="closeCallback($event)"
+        (carUpdated)="handleCarUpdated($event)"
       ></app-car-detail>
     </ng-container>
   </ng-template>
