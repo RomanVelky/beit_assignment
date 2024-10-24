@@ -1,15 +1,15 @@
 <div class="p-8">
   <form [formGroup]="carForm" (ngSubmit)="saveCar()">
-    <div>
-      <label>ID</label>
+    <div class="flex justify-between gap-2">
+      <label class="content-center">ID</label>
       <input pInputText formControlName="id" />
     </div>
-    <div>
-      <label>SPZ</label>
-      <input pInputText formControlName="licencePlate" />
+    <div class="flex justify-between gap-2 py-2">
+      <label class="content-center" for="licencePlate">SPZ</label>
+      <input pInputText formControlName="licencePlate" id="licencePlate" />
     </div>
-    <div>
-      <label>Znacka</label>
+    <div class="flex justify-between gap-2 py-2">
+      <label class="content-center">Znacka</label>
       <p-dropdown
         [options]="carBrands"
         formControlName="brand"
@@ -17,17 +17,41 @@
       >
       </p-dropdown>
     </div>
-    <div>
-      <label>Cena</label>
-      <input pInputNumber formControlName="price" />
+    <div class="flex justify-between gap-2 py-2">
+      <label class="content-center">Cena</label>
+      <p-inputNumber
+        formControlName="price"
+        inputId="currency-czk"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="2"
+        [min]="100"
+        mode="currency"
+        currency="CZK"
+        locale="cs-CZ"
+      ></p-inputNumber>
     </div>
-    <div>
+    <div class="flex justify-center gap-2 py-2">
       <label>Datum vydani</label>
-      <p-calendar formControlName="createdDate" [showIcon]="true"></p-calendar>
+
+      <p-calendar
+        formControlName="createdDate"
+        [showIcon]="true"
+        dateFormat="d.m.yy"
+      ></p-calendar>
     </div>
-    <div>
-      <button type="submit" pButton label="Ulozit"></button>
-      <button type="button" pButton label="Zavrit" (click)="close()"></button>
+    <div class="flex justify-center gap-4 py-4">
+      <button
+        type="submit"
+        pButton
+        label="Ulozit"
+        [disabled]="carForm.invalid"
+      ></button>
+      <button
+        type="button"
+        pButton
+        label="Zavrit"
+        (click)="emitClose($event)"
+      ></button>
     </div>
   </form>
 </div>
