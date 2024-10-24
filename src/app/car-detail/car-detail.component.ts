@@ -34,7 +34,9 @@ export class CarDetailComponent implements OnInit {
   @Output() closeEmitter = new EventEmitter<Event>();
   @Output() carUpdated = new EventEmitter<Car>();
 
-  @Input() // I decided for setter approach instead of using OnChanges. If the project would be larger scale I would think about using BehaviorSubject
+  // I decided for setter (like you said during the interview, setter could be used in scenario like this one) approach instead of using OnChanges.
+  // Another option preventing using OnChanges could be using BehaviorSubject
+  @Input()
   set car(value: Car) {
     this._car = value;
     if (this._car) {
@@ -71,6 +73,7 @@ export class CarDetailComponent implements OnInit {
   ngOnInit(): void {
     const carBrands = ['AUDI', 'BMW', 'MERCEDES', 'SKODA'] as const;
 
+    // I chose for data validation zod
     this.carFormSchema = z.object({
       licencePlate: z.string().min(1, 'Licence plate cannot be empty'),
       brand: z.enum(carBrands, { required_error: 'Brand is required' }),

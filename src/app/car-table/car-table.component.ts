@@ -63,6 +63,8 @@ export class CarTableComponent {
     this.sidebarRef.close(e);
   }
 
+  // If the assignment would require e.g. translates
+  // I would choose a different approach and would use locale to format this data into czech format
   formatValue(value: any, field: string): any {
     switch (field) {
       case 'price':
